@@ -21,6 +21,7 @@ function addTask() {
   const newTask = todoInput.value.trim();
   if (newTask !== "") {
     todo.push({ text: newTask, disabled: false });
+    saveCheckboxState(todo.length - 1, false); // Assuming the checkbox starts unchecked
     saveToLocalStorage();
     todoInput.value = "";
     displayTasks();
@@ -48,6 +49,11 @@ function displayTasks() {
     li.addEventListener("dragover", dragOver);
     li.addEventListener("drop", drop);
     todoList.appendChild(li);
+    const checkbox = li.querySelector('.todo-checkbox');
+    checkbox.checked = loadCheckboxState(index);
+    checkbox.addEventListener('change', function() {
+      saveCheckboxState(index, this.checked);
+    });
   });
   updateTodoCount();
 }
@@ -99,4 +105,13 @@ function drop(event) {
     saveToLocalStorage();
     displayTasks();
   }
+}
+
+function saveCheckboxState(index, checked) {
+  localStorage.setItem(`checkbox-${index}`, checked);
+}
+
+function loadCheckboxState(index) {
+  const state = localStorage.getItem(`checkbox-${index}`);
+  return state === "true"; // Return true if the checkbox state is "true" in local storage
 }
