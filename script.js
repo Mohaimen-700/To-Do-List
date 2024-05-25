@@ -21,7 +21,7 @@ function addTask() {
   const newTask = todoInput.value.trim();
   if (newTask !== "") {
     todo.push({ text: newTask, disabled: false });
-    saveCheckboxState(todo.length - 1, false); // Assuming the checkbox starts unchecked
+    saveCheckboxState(todo.length - 1, false); 
     saveToLocalStorage();
     todoInput.value = "";
     displayTasks();
@@ -113,5 +113,5 @@ function saveCheckboxState(index, checked) {
 
 function loadCheckboxState(index) {
   const state = localStorage.getItem(`checkbox-${index}`);
-  return state === "true"; // Return true if the checkbox state is "true" in local storage
+  return state === "true"; 
 }
